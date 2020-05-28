@@ -10,7 +10,7 @@
 #exit on first error
 set -e
 
-echo "[MT] NOTE: The script provides a cure for earlier MadGraph LO gridpacks to enable multi-threading (MT). It is also flexible enough to handle all versions of input gridpack, by applying necessary patches and/or fix bugs depending on the gridpack. In this sense, it disobeys the original goal to make this code simplest and keep ALL the logic in 'runcmsgrid.sh' inside the tarball. As the new gridpacks are starting to equip with the MT feature (from May 2020), at a proper time one should switch back to the original 'run_generic_tarball_cvmfs.sh' script."
+echo "[MT] NOTE: The script provides a cure for earlier MadGraph LO gridpacks to enable multi-threading (MT). It is also flexible enough to handle all versions of input gridpack, by applying necessary patches and/or fix bugs depending on the gridpack. In this sense, it disobeys the original goal to make this code simplest and keep ALL the logic in 'runcmsgrid.sh' inside the tarball. It is hence expected to switch back to the original 'run_generic_tarball_cvmfs.sh' at a proper time when the new gridpacks are starting to equip with the MT feature."
 
 echo "   ______________________________________     "
 echo "         Running Generic Tarball/Gridpack     "
@@ -85,8 +85,11 @@ MGVersion=(${MGVersion//./ })
 
 if [[ ${MGVersion[1]} -lt 6 ]] || [[ ${MGVersion[1]} -eq 6 && ${MGVersion[2]} -eq 0 ]]; then
     echo "[MT] Warning: multi-threading is not supported in MG version < 2.6.1. Will not activate the multi-thread feature."
+elif ([[ ${MGVersion[1]} -eq 6 ]] || [[ ${MGVersion[1]} -eq 7 && ${MGVersion[2]} -le 2 ]]) && [[ -e process/madevent/Cards/MadLoopParams.dat ]]; then
+    echo "[MT] Warning: multi-threading is not supported for loop-induced processes in MG version <= 2.7.2. Will not activate the multi-thread feature."
 else
-    # fix multi-thread bugs for MG<=2.7.2
+    # will activate multi-thread feature
+    # first fix a multi-thread bug for MG<=2.7.2
     if [[ ${MGVersion[1]} -eq 6 ]] || [[ ${MGVersion[1]} -eq 7 && ${MGVersion[2]} -le 2 ]]; then 
         echo "[MT] Apply a patch to fix multithread bug in 2.6.1<=MG=2.7.2"
         patch process/madevent/bin/internal/madevent_interface.py << EOF
