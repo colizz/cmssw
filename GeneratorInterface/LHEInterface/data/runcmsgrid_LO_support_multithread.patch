@@ -95,7 +95,7 @@
 +    # when interrupt, resume write access and kill ALL multi-thread event generation commands
 +    trap "cd $LHEWORKDIR; if fs listacl &>/dev/null; then fs sa -dir process/madevent -acl ${USER} all; else chmod +w process/madevent; fi; kill 0" SIGINT SIGTERM EXIT
 +    for i in `seq 0 $(( $ncpu-1 ))`; do
-+        event_generate_per_thread $i ${nevt_per_thread[$i]} $((rnum+100*$i)) | sed -e "s/^/[Thread $i] /" &
++        event_generate_per_thread $i ${nevt_per_thread[$i]} $((rnum+10*$i)) | sed -e "s/^/[Thread $i] /" &
 +    done; wait
 +    trap - SIGINT SIGTERM EXIT # resume
 +
