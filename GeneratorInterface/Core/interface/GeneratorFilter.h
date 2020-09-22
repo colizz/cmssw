@@ -139,6 +139,11 @@ namespace edm
     RandomEngineSentry<DEC> randomEngineSentryDecay(decayer_, ev.streamID());
 
     //added for selecting/filtering gen events, in the case of hadronizer+externalDecayer
+    Service<RandomNumberGenerator> rng;
+    auto &engine = rng->getEngine(ev.streamID());
+    engine.setSeed(123456789L, 0);
+    engine.get({2888826676L, 4222204286L, 239210476L, 2844405951L, 35428347L, 354167893L, 78655686L, 2729890738L, 145928944L, 2854232373L, 8374007L, 604295913L, 98961718L, 3463364680L, 217399053L, 1172894265L, 476173365L, 581365486L, 87742339L, 3794171095L, 467348746L, 1977749280L, 374460165L, 3619523079L, 300465183L, 67791381L, 415197038L, 4104105407L, 109639045L, 2293915619L, 218460587L, 782512343L, 520213210L, 3314195479L, 228207194L, 4L, 126079611L, 263768728L});
+    for (auto &i : engine.put()) {std::cout << i << " ";} std::cout << " -//- " <<  engine.getSeed() << "\n";
       
     bool passEvtGenSelector = false;
     std::unique_ptr<HepMC::GenEvent> event(nullptr);
@@ -245,6 +250,13 @@ namespace edm
     nEventsInLumiBlock_ = 0;
     RandomEngineSentry<HAD> randomEngineSentry(&hadronizer_, lumi.index());
     RandomEngineSentry<DEC> randomEngineSentryDecay(decayer_, lumi.index());
+
+    Service<RandomNumberGenerator> rng;
+    auto &engine = rng->getEngine(lumi.index());
+    engine.setSeed(123456789L, 0);
+    engine.get({2888826676L, 1086689750L, 464451294L, 3678444570L, 262261918L, 2027866678L, 183391890L, 3405079271L, 518542718L, 986412739L, 228981659L, 2742392937L, 153984327L, 1869421268L, 325378421L, 3688294823L, 65069892L, 149953528L, 350481243L, 113987349L, 393015960L, 901925528L, 288444849L, 1638152900L, 10519736L, 1145145174L, 119115892L, 1557136059L, 246838302L, 725415457L, 482492383L, 1179577351L, 84320973L, 3931436850L, 386528827L, 17L, 762561168L, 268852995L});
+    std::cout << "random state before initialization\n";
+    for (auto &i : engine.put()) {std::cout << i << " ";} std::cout << " -//- " <<  engine.getSeed() << "\n";
 
     hadronizer_.randomizeIndex(lumi,randomEngineSentry.randomEngine());
     hadronizer_.generateLHE(lumi,randomEngineSentry.randomEngine(), nThreads_);
