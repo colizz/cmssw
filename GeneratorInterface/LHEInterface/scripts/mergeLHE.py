@@ -395,7 +395,12 @@ def main(argv = None):
         os.makedirs(os.path.dirname(os.path.realpath(args.output_filename)))
 
     # Check arguments
-    assert len(input_files) > 1, 'Input LHE files should be more than 1.'
+    assert len(input_files) > 0, 'Input LHE files should be more than 0.'
+    if len(input_files) == 1:
+        logging.warning('Input LHE only has 1 file. Will copy this file to the destination.')
+        import shutil
+        shutil.copy(input_files[0], args.output_filename)
+        return
     assert [args.force_mglo_merger, args.force_cpp_merger].count(True) <= 1, \
         "Can only specify at most one from --force-mglo-merger or --force-cpp-merger."
 
