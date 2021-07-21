@@ -3,7 +3,10 @@ from Configuration.Generator.Pythia8CommonSettings_cfi import *
 from Configuration.Generator.MCTunes2017.PythiaCP5Settings_cfi import *
 from GeneratorInterface.EvtGenInterface.EvtGenSetting_cff import *
 
-generator = cms.EDFilter("Pythia8GeneratorFilter",
+from GeneratorInterface.Core.ExternalGeneratorFilter import ExternalGeneratorFilter
+
+generator = ExternalGeneratorFilter(
+            cms.EDFilter("Pythia8GeneratorFilter",
                          comEnergy = cms.double(13000.0),
                          crossSection = cms.untracked.double(54000000000),
                          filterEfficiency = cms.untracked.double(3.0e-4),
@@ -39,6 +42,7 @@ generator = cms.EDFilter("Pythia8GeneratorFilter",
                                     'processParameters',
                            )
                         )
+)
 )
 
 generator.PythiaParameters.processParameters.extend(EvtGenExtraParticles)

@@ -3,7 +3,9 @@ import os
 
 source = cms.Source("EmptySource")
 
-generator = cms.EDFilter("SherpaGeneratorFilter",
+from GeneratorInterface.Core.ExternalGeneratorFilter import ExternalGeneratorFilter
+
+generator = ExternalGeneratorFilter(cms.EDFilter("SherpaGeneratorFilter",
   maxEventsToPrint = cms.int32(0),
   filterEfficiency = cms.untracked.double(1.0),
   crossSection = cms.untracked.double(-1),
@@ -60,6 +62,7 @@ generator = cms.EDFilter("SherpaGeneratorFilter",
 				"}(selector)"
                                                   ),
                              )
+)
 )
 
 ProductionFilterSequence = cms.Sequence(generator)
