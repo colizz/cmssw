@@ -45,6 +45,8 @@ supportedBtagInfos = [
   , 'pfParticleTransformerAK4TagInfos'
     # UnifiedParticleTransformerAK4 tag infos
   , 'pfUnifiedParticleTransformerAK4TagInfos'
+    # GlobalParticleTransformerAK8 tag infos
+  , 'pfGlobalParticleTransformerAK8TagInfos'
     # DeepDoubleB/C tag infos
   , 'pfDeepDoubleXTagInfos'
     # DeepBoostedJet tag infos
@@ -371,5 +373,12 @@ from RecoBTag.ONNXRuntime.pfParticleTransformerAK4_cff import _pfNegativeParticl
 # update supportedBtagDiscr
 for disc in _pfNegativeParticleTransformerAK4JetTagsProbs:
     supportedBtagDiscr[disc] = [["pfNegativeParticleTransformerAK4TagInfos"]]
+# -----------------------------------
 
-
+# -----------------------------------
+# setup GlobalParticleTransformer AK8
+from RecoBTag.ONNXRuntime.pfGlobalParticleTransformerAK8_cff import _pfGlobalParticleTransformerAK8JetTagsProbs
+# update supportedBtagDiscr
+for disc in _pfGlobalParticleTransformerAK8JetTagsProbs:
+    supportedBtagDiscr[disc] = [["pfGlobalParticleTransformerAK8TagInfos"]]
+# -----------------------------------
