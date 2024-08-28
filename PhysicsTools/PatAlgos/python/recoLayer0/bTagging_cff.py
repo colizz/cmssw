@@ -377,8 +377,11 @@ for disc in _pfNegativeParticleTransformerAK4JetTagsProbs:
 
 # -----------------------------------
 # setup GlobalParticleTransformer AK8
-from RecoBTag.ONNXRuntime.pfGlobalParticleTransformerAK8_cff import _pfGlobalParticleTransformerAK8JetTagsProbs
+from RecoBTag.ONNXRuntime.pfGlobalParticleTransformerAK8_cff import _pfGlobalParticleTransformerAK8JetTagsProbs, _pfGlobalParticleTransformerAK8JetTagsMetaDiscrs
 # update supportedBtagDiscr
 for disc in _pfGlobalParticleTransformerAK8JetTagsProbs:
     supportedBtagDiscr[disc] = [["pfGlobalParticleTransformerAK8TagInfos"]]
+# update supportedMetaDiscr
+for disc in _pfGlobalParticleTransformerAK8JetTagsMetaDiscrs:
+    supportedMetaDiscr[disc] = _pfGlobalParticleTransformerAK8JetTagsProbs
 # -----------------------------------

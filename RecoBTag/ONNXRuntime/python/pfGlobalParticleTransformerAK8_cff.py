@@ -25,5 +25,10 @@ pfGlobalParticleTransformerAK8Task = cms.Task(puppi, primaryVertexAssociation, p
 
 # declare all the discriminators
 
-# mass-decorrelated: probs
+# probs
 _pfGlobalParticleTransformerAK8JetTagsProbs = ['pfGlobalParticleTransformerAK8JetTags:' + flav_name for flav_name in pfGlobalParticleTransformerAK8JetTags.flav_names]
+
+# meta-taggers
+_pfGlobalParticleTransformerAK8JetTagsMetaDiscrs = []
+
+_pfGlobalParticleTransformerAK8JetTagsAll = _pfGlobalParticleTransformerAK8JetTagsProbs + _pfGlobalParticleTransformerAK8JetTagsMetaDiscrs
